@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuarios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+        .main-wrapper {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            background-color: #2b2b40; 
+        }
+        .image-side {
+            flex: 2.2; 
+            background-color: #1e1e2f;
+            overflow: hidden;
+        }
+        .image-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .content-side {
+            flex: 1;
+            background-color: #ff00aa;
+            padding: 25px 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        .registro-container {
+            width: 100%;
+            padding: 0;
+        }
+        .registro-container h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 12px;
+        }
+        .registro-container input,
+        .registro-container select {
+            width: 100%;
+            padding: 15px 18px;
+            margin-bottom: 18px;
+            border-radius: 10px;
+            border: 1px solid black;
+            background: #ff8ad8; 
+            color: black;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+        .registro-container input::placeholder {
+            color: black;
+            opacity: 0.8;
+        }
+        .registro-container select option {
+            background: #1c1c2e;
+            color: white;
+        }
+        .registro-container input:focus,
+        .registro-container select:focus {
+            outline: none;
+            border-color: #6c63ff;
+            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.3);
+        }
+        .registro-container button {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            background: #ff63f7; /* rosa botón */
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 10px;
+        }
+        .registro-container button:hover {
+            background: #d84fc0;
+            transform: scale(1.02);
+        }
+        .seccion-oscura {
+            background-color: #1e1e30;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+        .seccion-oscura h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ff63f7;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        .tabla-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+        .tabla-usuarios {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .tabla-usuarios th {
+            background: #2b2b40;
+            color: #ff63f7;
+            padding: 12px 5px;
+            font-weight: 600;
+            text-align: left;
+            border-bottom: 2px solid #ff63f7;
+        }
+        .tabla-usuarios td {
+            padding: 10px 5px;
+            border-bottom: 1px solid #444;
+            color: #ddd;
+        }
+        .tabla-usuarios tr:hover td {
+            background-color: #3a3a55;
+        }
+        .tabs-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
+            background: #1e1e30;
+            padding: 15px;
+            border-radius: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .tab-item {
+            background: #2b2b40;
+            color: #fff;
+            text-align: center;
+            padding: 8px 0;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: default;
+            border: 1px solid #444;
+            transition: 0.2s;
+        }
+        .tab-item:hover {
+            background: #ff63f7;
+            border-color: #ff63f7;
+        }
+        .footer-redes {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #1e1e30;
+            padding: 15px 10px;
+            border-radius: 40px;
+            margin-top: 10px;
+        }
+        .footer-redes a {
+            color: white;
+            font-size: 30px;
+            transition: color 0.3s, transform 0.2s;
+            text-decoration: none;
+        }
+        .footer-redes a:hover {
+            color: #ff63f7;
+            transform: scale(1.2);
+        }
+        .content-side::-webkit-scrollbar {
+            width: 8px;
+        }
+        .content-side::-webkit-scrollbar-track {
+            background: #1e1e30;
+        }
+        .content-side::-webkit-scrollbar-thumb {
+            background: #ff63f7;
+            border-radius: 4px;
+        }
+        @media (max-width: 900px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .image-side {
+                flex: none;
+                height: 30vh;
+            }
+            .content-side {
+                flex: none;
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="image-side">
+            <img src="imagenes/Lago.jpg" alt="Paisaje de lago">
+        </div>
+
+        <div class="content-side">
+            <div class="registro-container">
+                <h2>Registro de Usuarios</h2>
+                <form>
+                    <input type="text" placeholder="Nombre completo" required>
+
+                    <select required>
+                        <option value="">Tipo de documento</option>
+                        <option value="cc">Cédula de Ciudadanía</option>
+                        <option value="ce">Cédula de Extranjería</option>
+                        <option value="ppt">Permiso por Protección Temporal</option>
+                        <option value="pep">Permiso Especial de Permanencia</option>
+                        <option value="passport">Pasaporte</option>
+                    </select>
+
+                    <input type="text" placeholder="Número de documento" required>
+                    <input type="email" placeholder="Correo electrónico" required>
+                    <input type="password" placeholder="Contraseña" required>
+                    <input type="password" placeholder="Confirmar contraseña" required>
+
+                    <button type="submit">Registrar</button>
+                </form>
+            </div>
+    </script>
+</body>
+</html>
